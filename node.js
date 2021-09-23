@@ -21,12 +21,12 @@ var server = http.createServer(function (request, response) {
 
   /******** 从这里开始看，上面不要看 ************/
 
-  console.log("有个傻子发请求过来啦！路径（带查询参数）为：" + pathWithQuery);
 
+
+  console.log("有个傻子发请求过来啦！路径（带查询参数）为：" + pathWithQuery);
   response.statusCode = 200;
   //路径为 "/"则返回 "/index.html"
   let filePath = path === "/" ? "/index.html" : path;
-  //文件名不存在时捕捉错误并且返回404
   let index = filePath.lastIndexOf(".");
   let suffix = filePath.substring(index);
   const fileType = {
@@ -40,7 +40,7 @@ var server = http.createServer(function (request, response) {
     "Content-Type",
     `${fileType[suffix]||'text/html'};charset=utf-8`
   );
-
+ //文件名不存在时捕捉错误并且返回404
   let string;
   try {
     string = fs.readFileSync(`src/${filePath}`);
@@ -48,7 +48,6 @@ var server = http.createServer(function (request, response) {
     string = "文件不存在";
     request.statusCode = 404;
   }
-
   response.write(string);
   response.end();
 
